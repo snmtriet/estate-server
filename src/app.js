@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -8,6 +9,7 @@ const estateRouter = require('./routes/estateRoutes');
 const userRouter = require('./routes/userRoutes');
 const facultyRouter = require('./routes/facultyRoutes');
 const inventoryRouter = require('./routes/inventoryRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
 
 const app = express();
 
@@ -18,7 +20,8 @@ app.use(express.json());
 app.use('/api/faculties', facultyRouter);
 app.use('/api/estates', estateRouter);
 app.use('/api/users', userRouter);
-app.use('/api/inventory', inventoryRouter);
+app.use('/api/inventories', inventoryRouter);
+app.use('/api/categories', categoryRouter);
 
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();

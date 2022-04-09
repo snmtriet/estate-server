@@ -37,13 +37,13 @@ exports.deleteFaculty = catchAsync(async (req, res) => {
 });
 
 exports.getFaculty = catchAsync(async (req, res) => {
-    const estate = await Faculty.findById(req.params.id);
+    const faculty = await Faculty.findById(req.params.id);
     //Faculty.findOne({_id: req.parmas.id})
 
     res.status(200).json({
         status: 'success',
         data: {
-            estate,
+            faculty,
         },
     });
 });

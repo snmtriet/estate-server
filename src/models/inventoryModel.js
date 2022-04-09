@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { required } = require('nodemon/lib/config');
 
 const inventorySchema = new mongoose.Schema(
     {
@@ -11,7 +10,7 @@ const inventorySchema = new mongoose.Schema(
         checkList: [
             {
                 type: mongoose.Schema.ObjectId,
-                ref: 'Estate',
+                ref: 'Category',
                 required: true,
             },
         ],
@@ -32,7 +31,7 @@ inventorySchema.pre(/^find/, function (next) {
         select: 'fullname',
     }).populate({
         path: 'checkList',
-        select: 'name status',
+        select: '-__v',
     });
 
     next();

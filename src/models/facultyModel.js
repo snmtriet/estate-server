@@ -8,12 +8,7 @@ const facultySchema = new mongoose.Schema({
         trim: true,
     },
     slug: String,
-    estates: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'Estate',
-        },
-    ],
+    describe: String,
     createdAt: {
         type: Date,
         default: Date.now,
@@ -32,14 +27,6 @@ facultySchema.pre('save', function (next) {
 //     this.estates = await Promise.all(estatesPromies);
 //     next();
 // });
-
-facultySchema.pre(/^find/, function (next) {
-    this.populate({
-        path: 'estates',
-        select: '-__v',
-    });
-    next();
-});
 
 const Faculty = mongoose.model('Faculty', facultySchema);
 

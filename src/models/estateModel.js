@@ -8,11 +8,22 @@ const EstateSchema = new mongoose.Schema({
         trim: true,
     },
     slug: String,
+    category: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Category',
+        required: true,
+    },
     status: {
         type: String,
         enum: {
-            values: ['Hư hỏng', 'Đang sử dụng', 'Đã mất'],
-            message: 'Status phải là Hư hỏng, Đang sử dụng hoặc Đã mất',
+            values: [
+                'Hư hỏng chờ sửa chữa',
+                'Hư hỏng xin thanh lý',
+                'Đang sử dụng',
+                'Không nhu cầu sử dụng',
+            ],
+            message:
+                'Status phải là Hư hỏng chờ sửa chữa, Hư hỏng xin thanh lý, Không nhu cầu sử dụng hoặc Đang sử dụng',
         },
         default: 'Đang sử dụng',
     },
@@ -20,6 +31,18 @@ const EstateSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    updatedAt: {
+        type: Date,
+    },
+});
+
+EstateSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'category',
+        select: 'name describe',
+    });
+
+    next();
 });
 
 EstateSchema.pre('save', function (next) {

@@ -17,10 +17,17 @@ const userSchema = new mongoose.Schema(
             validate: [validator.isEmail, ['Please provide a valid email!']],
         },
         photo: String,
+        age: String,
+        phone: String,
         role: {
             type: String,
             enum: ['user', 'admin'],
             default: 'user',
+        },
+        faculty: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Faculty',
+            default: '6229da9cea2aa2a176e775b0',
         },
         password: {
             type: String,
@@ -46,6 +53,10 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
             select: false,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
         },
     },
     {
@@ -109,6 +120,15 @@ userSchema.methods.createPasswordResetToken = function () {
 
     return resetToken;
 };
+
+userSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'faculty',
+        select: 'name describe',
+    });
+
+    next();
+});
 
 const User = mongoose.model('User', userSchema);
 

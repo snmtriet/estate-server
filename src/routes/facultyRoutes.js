@@ -12,7 +12,11 @@ router
 router
     .route('/:id')
     .get(facultyController.getFaculty)
-    .patch(facultyController.updateFaculty)
+    .patch(
+        authController.protect,
+        authController.restrictTo('admin'),
+        facultyController.updateFaculty
+    )
     .delete(
         authController.protect,
         authController.restrictTo('admin'),

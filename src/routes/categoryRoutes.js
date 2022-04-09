@@ -1,26 +1,30 @@
 const express = require('express');
-const estateController = require('./../controller/estateController');
+const categoryController = require('./../controller/categoryController');
 const authController = require('./../controller/authController');
 
 const router = express.Router();
 
 router
     .route('/')
-    .get(authController.protect, estateController.getAllEstate)
-    .post(estateController.createEstate);
+    .get(
+        authController.protect,
+        authController.restrictTo('admin', 'user'),
+        categoryController.getAllCategory
+    )
+    .post(categoryController.createCategory);
 
 router
     .route('/:id')
-    .get(estateController.getEstate)
+    .get(categoryController.getCategory)
     .patch(
         authController.protect,
         authController.restrictTo('admin', 'user'),
-        estateController.updateEstate
+        categoryController.updateCategory
     )
     .delete(
         authController.protect,
         authController.restrictTo('admin'),
-        estateController.deleteEstate
+        categoryController.deleteCategory
     );
 
 module.exports = router;

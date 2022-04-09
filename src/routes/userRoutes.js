@@ -1,7 +1,6 @@
 const express = require('express');
 const userController = require('./../controller/userController');
 const authController = require('./../controller/authController');
-const { route } = require('express/lib/application');
 
 const router = express.Router();
 
@@ -18,9 +17,21 @@ router.patch(
 );
 
 router.patch('/updateMe', authController.protect, userController.updateMe);
+
 router.delete('/deleteMe', authController.protect, userController.deleteMe);
 
-router.route('/').get(userController.getAllUser);
-router.route('/:id').get(userController.getUser);
+router.route('/').get(authController.protect, userController.getAllUser);
+router
+    .route('/:id')
+    .get(
+        authController.protect,
+        authController.restrictTo('admin', 'user'),
+        userController.getUser
+    )
+    .patch(
+        authController.protect,
+        authController.restrictTo('admin'),
+        userController.deleteUser
+    );
 
 module.exports = router;

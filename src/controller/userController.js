@@ -34,7 +34,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     }
 
     // 2. Filtered out unwanted fields names that are not allowed to be updated
-    const filteredBody = filterObj(req.body, 'fullname');
+    const filteredBody = filterObj(req.body, 'fullname', 'age', 'phone');
 
     // 3. Update user document
     const updatedUser = await User.findByIdAndUpdate(
@@ -55,6 +55,15 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
     await User.findByIdAndUpdate(req.user.id, { active: false });
+
+    res.status(204).json({
+        status: 'success',
+        data: null,
+    });
+});
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+    await User.findByIdAndUpdate(req.params.id, { active: false });
 
     res.status(204).json({
         status: 'success',

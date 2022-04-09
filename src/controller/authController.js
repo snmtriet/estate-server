@@ -1,3 +1,4 @@
+require('dotenv').config();
 const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
@@ -7,7 +8,7 @@ const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
 
 const signToken = (id) => {
-    return jwt.sign({ id }, 'secretKey', {
+    return jwt.sign({ id }, process.env.SECRET_KEY, {
         expiresIn: '90d',
     });
 };
@@ -82,7 +83,7 @@ exports.protect = catchAsync(async (req, res, next) => {
         );
     }
     // 2. verification token
-    const decoded = await promisify(jwt.verify)(token, 'secretKey');
+    const decoded = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
 
     // 3. check if user still exists
     const freshUser = await User.findById(decoded.id);
@@ -97,7 +98,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     // 4. Check if user changed password after the token was issued
 
     if (freshUser.changedPasswordAfter(decoded.iat)) {
-        console.log('b');
         return next(
             new AppError(
                 'User recently changed password! Please log in again.',

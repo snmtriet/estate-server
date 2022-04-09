@@ -24,28 +24,6 @@ exports.createInventory = catchAsync(async (req, res, next) => {
     });
 });
 
-// exports.updateFaculty = catchAsync(async (req, res) => {
-//     const faculty = await Faculty.findByIdAndUpdate(req.params.id, req.body, {
-//         new: true,
-//         runValidators: true,
-//     });
-
-//     res.status(200).json({
-//         status: 'success',
-//         data: {
-//             faculty,
-//         },
-//     });
-// });
-
-// exports.deleteFaculty = catchAsync(async (req, res) => {
-//     await Faculty.findByIdAndDelete(req.params.id);
-//     res.status(204).json({
-//         status: 'success',
-//         data: null,
-//     });
-// });
-
 exports.getInventory = catchAsync(async (req, res) => {
     const inventory = await Inventory.findById(req.params.id);
 
