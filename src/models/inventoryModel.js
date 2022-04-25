@@ -7,13 +7,7 @@ const inventorySchema = new mongoose.Schema(
             ref: 'User',
             required: true,
         },
-        checkList: [
-            {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Category',
-                required: true,
-            },
-        ],
+        checkList: [],
         createdAt: {
             type: Date,
             default: Date.now,
@@ -29,9 +23,6 @@ inventorySchema.pre(/^find/, function (next) {
     this.populate({
         path: 'user',
         select: 'fullname',
-    }).populate({
-        path: 'checkList',
-        select: '-__v',
     });
 
     next();
