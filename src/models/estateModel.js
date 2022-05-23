@@ -21,9 +21,10 @@ const EstateSchema = new mongoose.Schema({
                 'Hư hỏng xin thanh lý',
                 'Đang sử dụng',
                 'Không nhu cầu sử dụng',
+                'Đã mất',
             ],
             message:
-                'Status phải là Hư hỏng chờ sửa chữa, Hư hỏng xin thanh lý, Không nhu cầu sử dụng hoặc Đang sử dụng',
+                'Status phải là Hư hỏng chờ sửa chữa, Hư hỏng xin thanh lý, Đã mất, Không nhu cầu sử dụng hoặc Đang sử dụng',
         },
         default: 'Đang sử dụng',
     },
