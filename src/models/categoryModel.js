@@ -13,6 +13,7 @@ const CategorySchema = new mongoose.Schema({
         hhcsc: Number, // hư hỏng chờ sửa chữa
         hhxtl: Number, // hư hỏng xin thanh lý
         kncsd: Number, // không có nhu cầu sử dụng
+        dm: Number, // đã mất
     },
     createdAt: {
         type: Date,
