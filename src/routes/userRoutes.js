@@ -25,12 +25,12 @@ router
     .route('/:id')
     .get(
         authController.protect,
-        authController.restrictTo('admin', 'user'),
+        authController.restrictTo('user'),
         userController.getUser
     )
     .patch(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('user'),
         userController.deleteUser
     );
 

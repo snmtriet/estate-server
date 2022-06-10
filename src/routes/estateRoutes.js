@@ -14,12 +14,12 @@ router
     .get(estateController.getEstate)
     .patch(
         authController.protect,
-        authController.restrictTo('admin', 'user'),
+        authController.restrictTo('user'),
         estateController.updateEstate
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('user'),
         estateController.deleteEstate
     );
 

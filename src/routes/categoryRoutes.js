@@ -8,7 +8,7 @@ router
     .route('/')
     .get(
         authController.protect,
-        authController.restrictTo('admin', 'user'),
+        authController.restrictTo('user'),
         categoryController.getAllCategory
     )
     .post(categoryController.createCategory);
@@ -18,12 +18,12 @@ router
     .get(categoryController.getCategory)
     .patch(
         authController.protect,
-        authController.restrictTo('admin', 'user'),
+        authController.restrictTo('user'),
         categoryController.updateCategory
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('user'),
         categoryController.deleteCategory
     );
 

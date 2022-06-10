@@ -14,12 +14,12 @@ router
     .get(facultyController.getFaculty)
     .patch(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('user'),
         facultyController.updateFaculty
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('user'),
         facultyController.deleteFaculty
     );
 
